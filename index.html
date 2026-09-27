@@ -75,6 +75,10 @@
   .bird .where{font-size:13.5px;color:var(--muted)}
   .bird .links{font-size:13.5px}
   .bird[hidden]{display:none}
+  .bird .photo{margin:-18px -18px 8px;position:relative}
+  .bird .photo img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;object-position:center 25%;border-radius:14px 14px 0 0;background:var(--chip)}
+  .bird .photo figcaption{position:absolute;right:6px;bottom:6px;font-size:10.5px;line-height:1.2;background:rgba(0,0,0,.55);color:#fff;padding:2px 7px;border-radius:999px;max-width:92%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bird .photo figcaption a{color:#fff;text-decoration:none}
   .count{color:var(--muted);font-size:14px;margin-bottom:10px}
   #map{height:380px;border-radius:14px;border:1px solid var(--line);z-index:1}
   table{border-collapse:collapse;width:100%;font-size:14.5px}
@@ -93,9 +97,9 @@
 <header class="hero">
   <div class="wrap">
     <h1>Сан-Паулу за 6,5 часов:<br>птицы и спокойный обед</h1>
-    <p class="lead">Пересадка в аэропорту Гуарульос (GRU). Выходим в город, смотрим птиц в парке у реки Тьете, обедаем и возвращаемся к рейсу на Боготу.</p>
+    <p class="lead">Маршрут Ларнака → Доха → Сан-Паулу → Богота. Вторая пересадка, в аэропорту Гуарульос (GRU), самая длинная. Выходим в город, смотрим птиц в парке у реки Тьете, обедаем и возвращаемся к рейсу на Боготу.</p>
     <div class="flight">
-      <div><b>10:35</b><small>ср 30 сентября 2026 · DOH → GRU · Qatar · Терминал 3</small></div>
+      <div><b>10:35</b><small>ср 30 сентября 2026 · LCA → DOH → GRU · Qatar · Терминал 3</small></div>
       <div class="mid">6 ч 40 мин<br>на земле</div>
       <div style="text-align:right"><b>17:15</b><small>GRU → BOG · Avianca · Терминал 2</small></div>
     </div>
@@ -155,8 +159,8 @@
     <div class="card">
       <h3>Багаж и посадочные</h3>
       <ul class="tight">
-        <li>Билет единый (Qatar + Avianca в одной брони), поэтому багаж оформляется до Боготы. При регистрации в Дохе попросите бирку до <b>BOG</b> и проверьте это на квитанции.</li>
-        <li>Там же попросите посадочные на оба сегмента. Если на Avianca не выдадут, зарегистрируйтесь онлайн за 24 часа или получите посадочный на стойке Avianca в Т2 (открывается за 3 часа до вылета, закрывается за час).</li>
+        <li>Билет единый (Qatar + Avianca в одной брони), поэтому багаж оформляется до Боготы. При регистрации в Ларнаке попросите бирку до <b>BOG</b> и проверьте это на квитанции: багаж должен пройти обе пересадки без вашего участия.</li>
+        <li>Там же попросите посадочные на все три сегмента. В Дохе вы просто пересаживаетесь в транзитной зоне. Если на Avianca не выдадут, зарегистрируйтесь онлайн за 24 часа или получите посадочный на стойке Avianca в Т2 (открывается за 3 часа до вылета, закрывается за час).</li>
         <li>В ручной клади: бинокль, документы, зарядка. В город вы едете налегке.</li>
       </ul>
     </div>
@@ -223,11 +227,10 @@
 <!-- ===================== BIRDS ===================== -->
 <section id="birds">
   <h2>Каких птиц искать</h2>
-  <p class="sub">Отобраны виды, которые реально встретить днём в Parque Ecológico do Tietê и Bosque Maia. Отдельно помечены те, которых <b>нет в Колумбии</b>, и эндемики Бразилии / Атлантического леса.</p>
+  <p class="sub">Отобраны виды, которые реально встретить днём в Parque Ecológico do Tietê и Bosque Maia. Почти все они не встречаются в Колумбии, так что для жены это в основном новые виды. Отдельно помечены эндемики Бразилии и Атлантического леса.</p>
 
   <div class="filters">
     <button class="on" data-f="all">Все</button>
-    <button data-f="nocol">Нет в Колумбии</button>
     <button data-f="endemic">Эндемики</button>
     <button data-f="likely">Почти наверняка</button>
     <button data-f="lucky">Если повезёт</button>
@@ -236,235 +239,261 @@
 
   <div class="grid two" id="birdgrid">
 
-    <div class="card bird" data-tags="nocol endemic likely">
+    <div class="card bird" data-tags="endemic likely">
+      <figure class="photo"><img src="img/birds/plain_parakeet.jpg" alt="Plain parakeet" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Brotogeris_tirica_-Morretes%2C_Parana%2C_Brazil-8.jpg" target="_blank" rel="noopener">Ben Tavener · CC BY 2.0</a></figcaption></figure>
       <div class="names"><h4>Простой попугайчик</h4><span class="sci">Brotogeris tirica</span></div>
       <div class="en">Plain Parakeet</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">эндемик Бразилии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">эндемик Бразилии</span><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> маленький целиком зелёный попугайчик с заострённым хвостом, синеватым отливом на крыльях и бледным клювом. Летает шумными стайками, резкие трескучие крики.</p>
       <div class="where">Где: кроны деревьев и эвкалипты в парке, часто в полёте над озёрами.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Plain_parakeet" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol endemic likely">
+    <div class="card bird" data-tags="endemic likely">
+      <figure class="photo"><img src="img/birds/wing-banded_hornero.jpg" alt="Wing-banded hornero" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Tail-banded_hornero_%28Furnarius_figulus%29.jpg" target="_blank" rel="noopener">francesco_veronesi (Flickr) · CC BY-SA 2.0</a></figcaption></figure>
       <div class="names"><h4>Полосатокрылый печник</h4><span class="sci">Furnarius figulus</span></div>
       <div class="en">Wing-banded Hornero</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">эндемик Бразилии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">эндемик Бразилии</span><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> похож на рыжего печника, но мельче и темнее, с рыжей шапочкой и заметной белёсой полосой на крыле в полёте. Ходит по илистым берегам озёр, качая хвостом.</p>
       <div class="where">Где: кромка воды, мокрые газоны у озёр.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Wing-banded_hornero" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol likely">
+    <div class="card bird" data-tags="likely">
+      <figure class="photo"><img src="img/birds/rufous_hornero.jpg" alt="Rufous hornero" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Rufous_hornero_%28Furnarius_rufus%29_Colonia_%28cropped%29.jpg" target="_blank" rel="noopener">Charles J. Sharp · CC BY-SA 4.0</a></figcaption></figure>
       <div class="names"><h4>Рыжий печник</h4><span class="sci">Furnarius rufus</span></div>
       <div class="en">Rufous Hornero</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> размером с дрозда, целиком рыжевато-коричневый, хвост ярче спины, светлое горло. Ходит по газонам как «маленькая курица». Строит из глины гнёзда-печки на столбах и ветках, их видно повсюду.</p>
       <div class="where">Где: любые газоны, обочины, парковка у входа.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Rufous_hornero" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol likely">
+    <div class="card bird" data-tags="likely">
+      <figure class="photo"><img src="img/birds/red-crested_cardinal.jpg" alt="Red-crested cardinal" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Red-crested_cardinal_%28Paroaria_coronata%29_Costanera_Sur.jpg" target="_blank" rel="noopener">Charles J. Sharp · CC BY-SA 4.0</a></figcaption></figure>
       <div class="names"><h4>Красноголовый кардинал</h4><span class="sci">Paroaria coronata</span></div>
       <div class="en">Red-crested Cardinal</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> ярко-красная голова с хохлом и красное горло, серая спина, белое брюхо. Ни с кем не спутать. Единственное место в Сан-Паулу, где он встречается регулярно (популяция от улетевших клеточных птиц).</p>
       <div class="where">Где: пикниковая зона у озера, столики, у закрытых киосков.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Red-crested_cardinal" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol endemic lucky">
+    <div class="card bird" data-tags="endemic lucky">
+      <figure class="photo"><img src="img/birds/red-cowled_cardinal.jpg" alt="Red-cowled cardinal" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Paroaria_dominicana05.jpg" target="_blank" rel="noopener">Dario Sanches · CC BY-SA 2.0</a></figcaption></figure>
       <div class="names"><h4>Краснокапюшонный кардинал</h4><span class="sci">Paroaria dominicana</span></div>
       <div class="en">Red-cowled Cardinal</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">эндемик Бразилии</span><span class="chip">если повезёт</span></div>
+      <div><span class="chip">эндемик Бразилии</span><span class="chip">если повезёт</span></div>
       <p><b>Признаки:</b> как красноголовый кардинал, но без хохла, красная голова более «гладкая», спина серо-чёрная с белыми пестринами. Родом с северо-востока Бразилии, здесь тоже из бывших клеточных птиц.</p>
       <div class="where">Где: там же, у пикниковых столов, часто в одной компании с красноголовым.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Red-cowled_cardinal" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol endemic likely">
+    <div class="card bird" data-tags="endemic likely">
+      <figure class="photo"><img src="img/birds/brazilian_tanager.jpg" alt="Brazilian tanager" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Ramphocelus_bresilius_-Sao_Paulo_Bagre%2C_Cananeia%2C_Sao_Paulo%2C_Brasil_-male-8.jpg" target="_blank" rel="noopener">Dario Sanches · CC BY-SA 2.0</a></figcaption></figure>
       <div class="names"><h4>Бразильская танагра</h4><span class="sci">Ramphocelus bresilius</span></div>
       <div class="en">Brazilian Tanager</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">эндемик Бразилии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">эндемик Бразилии</span><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> самец ослепительно алый с чёрными крыльями и хвостом, у основания клюва серебристо-белое пятно. Самка буро-рыжая с красноватым низом. Держится парами в кустах у воды.</p>
       <div class="where">Где: кусты и заросли по краям озёр, опушки.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Brazilian_tanager" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol likely">
+    <div class="card bird" data-tags="likely">
+      <figure class="photo"><img src="img/birds/sayaca_tanager.jpg" alt="Sayaca tanager" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Sayaca_tanager.JPG" target="_blank" rel="noopener">Eurico Zimbres · CC BY-SA 2.5</a></figcaption></figure>
       <div class="names"><h4>Танагра сайяка</h4><span class="sci">Thraupis sayaca</span></div>
       <div class="en">Sayaca Tanager</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> размером с воробья с небольшим, вся голубовато-серая, крылья с зеленовато-бирюзовым отливом. Южный «двойник» колумбийской синей танагры, в Колумбии её нет.</p>
       <div class="where">Где: везде, где есть деревья с плодами; часто вместе с пальмовыми танаграми.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Sayaca_tanager" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol lucky">
+    <div class="card bird" data-tags="lucky">
+      <figure class="photo"><img src="img/birds/ruby-crowned_tanager.jpg" alt="Ruby-crowned tanager" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Tachyphonus_coronatus_-Vale_do_Ribeira%2C_Sao_Paulo%2C_Registro%2C_Brasil_-male-8.jpg" target="_blank" rel="noopener">Dario Sanches · CC BY-SA 2.0</a></figcaption></figure>
       <div class="names"><h4>Рубиновошапочная танагра</h4><span class="sci">Tachyphonus coronatus</span></div>
       <div class="en">Ruby-crowned Tanager</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">если повезёт</span></div>
+      <div><span class="chip">если повезёт</span></div>
       <p><b>Признаки:</b> самец бархатно-чёрный с белым пятном под крылом, рубиновая «шапочка» скрыта и видна редко. Самка рыже-коричневая. Тихая, держится в подлеске.</p>
       <div class="where">Где: тенистые участки леса, Bosque Maia.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Ruby-crowned_tanager" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol lucky">
+    <div class="card bird" data-tags="lucky">
+      <figure class="photo"><img src="img/birds/toco_toucan.jpg" alt="Toco toucan" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:006_Toco_toucan_in_Encontro_das_%C3%81guas_State_Park_Photo_by_Giles_Laurent.jpg" target="_blank" rel="noopener">Giles Laurent · CC BY-SA 4.0</a></figcaption></figure>
       <div class="names"><h4>Токо-тукан</h4><span class="sci">Ramphastos toco</span></div>
       <div class="en">Toco Toucan</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">если повезёт</span></div>
+      <div><span class="chip">если повезёт</span></div>
       <p><b>Признаки:</b> самый большой тукан: огромный оранжевый клюв с чёрным пятном на конце, чёрное тело, белое горло, голубая кожа вокруг глаза. Летает тяжело, «рывками». В парке отмечается нерегулярно, но бывает.</p>
       <div class="where">Где: высокие сухие ветки, кроны у озёр; слушайте хриплое «кряканье».</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Toco_toucan" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol likely">
+    <div class="card bird" data-tags="likely">
+      <figure class="photo"><img src="img/birds/swallow-tailed_hummingbird.jpg" alt="Swallow-tailed hummingbird" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Eupetomena_macroura_-Piraju%2C_Sao_Paulo%2C_Brazil-8.jpg" target="_blank" rel="noopener">Dario Sanches · CC BY-SA 2.0</a></figcaption></figure>
       <div class="names"><h4>Вилохвостый колибри</h4><span class="sci">Eupetomena macroura</span></div>
       <div class="en">Swallow-tailed Hummingbird</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> крупный (для колибри) тёмный колибри с синей головой и грудью, зелёным телом и длинным глубоко вырезанным «ласточкиным» хвостом. Агрессивно гоняет всех от цветущих деревьев.</p>
       <div class="where">Где: цветущие деревья и кусты по всему парку, в Bosque Maia тоже.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Swallow-tailed_hummingbird" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol likely">
+    <div class="card bird" data-tags="likely">
+      <figure class="photo"><img src="img/birds/glittering-bellied_emerald.jpg" alt="Glittering-bellied emerald" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Glittering-bellied_emerald_%28Chlorostilbon_lucidus_berlepschi%29_male_Colonia.jpg" target="_blank" rel="noopener">Charles J. Sharp · CC BY-SA 4.0</a></figcaption></figure>
       <div class="names"><h4>Блестящебрюхий изумруд</h4><span class="sci">Chlorostilbon lucidus</span></div>
       <div class="en">Glittering-bellied Emerald</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> мелкий колибри, самец весь сверкающе-зелёный с синеватым горлом, хвост синевато-чёрный, клюв красный с чёрным кончиком. Самка серая снизу с белой полоской за глазом.</p>
       <div class="where">Где: низкие цветущие кусты, живые изгороди.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Glittering-bellied_emerald" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol lucky">
+    <div class="card bird" data-tags="lucky">
+      <figure class="photo"><img src="img/birds/gilded_sapphire.jpg" alt="Gilded sapphire" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Gilded_hummingbird_%28Hylocharis_chrysura%29_Costanera_Norte.jpg" target="_blank" rel="noopener">Charles J. Sharp · CC BY-SA 4.0</a></figcaption></figure>
       <div class="names"><h4>Золотистый сапфир</h4><span class="sci">Hylocharis chrysura</span></div>
       <div class="en">Gilded Sapphire</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">если повезёт</span></div>
+      <div><span class="chip">если повезёт</span></div>
       <p><b>Признаки:</b> колибри золотисто-зелёного цвета с бронзовым отливом, рыжеватое горло, коралловый клюв с чёрным кончиком. Спокойнее вилохвостого, сидит на открытых веточках.</p>
       <div class="where">Где: опушки, цветущие деревья у воды.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Gilded_sapphire" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol likely">
+    <div class="card bird" data-tags="likely">
+      <figure class="photo"><img src="img/birds/guira_cuckoo.jpg" alt="Guira cuckoo" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Guirakuckuck_Guira_guira.JPG" target="_blank" rel="noopener">Andreas Trepte · CC BY-SA 4.0</a></figcaption></figure>
       <div class="names"><h4>Гуира</h4><span class="sci">Guira guira</span></div>
       <div class="en">Guira Cuckoo</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> взлохмаченная рыжая «причёска», оранжевый клюв, полосатая спина, длинный хвост. Ходят группами по 5–15 птиц по газонам, сидят рядком на заборах. Родственник ани, но выглядит совсем иначе.</p>
       <div class="where">Где: открытые газоны, парковка, обочины.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Guira_cuckoo" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol likely">
+    <div class="card bird" data-tags="likely">
+      <figure class="photo"><img src="img/birds/campo_flicker.jpg" alt="Campo flicker" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:173_Female_Campo_flicker_in_Encontro_das_%C3%81guas_State_Park_Photo_by_Giles_Laurent.jpg" target="_blank" rel="noopener">Giles Laurent · CC BY-SA 4.0</a></figcaption></figure>
       <div class="names"><h4>Полевой дятел</h4><span class="sci">Colaptes campestris</span></div>
       <div class="en">Campo Flicker</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> крупный дятел, кормится на земле муравьями. Золотисто-жёлтая грудь и шея, чёрная шапочка, полосатая спина, чёрное «нагрудник». Громкое «уик-уик-уик».</p>
       <div class="where">Где: газоны и муравейники на открытых участках.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Campo_flicker" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol likely">
+    <div class="card bird" data-tags="likely">
+      <figure class="photo"><img src="img/birds/green-barred_woodpecker.jpg" alt="Green-barred woodpecker" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Green-barred_woodpecker_%28Colaptes_melanochloros_melanochloros%29_male_Colonia.jpg" target="_blank" rel="noopener">Charles J. Sharp · CC BY-SA 4.0</a></figcaption></figure>
       <div class="names"><h4>Зеленополосый дятел</h4><span class="sci">Colaptes melanochloros</span></div>
       <div class="en">Green-barred Woodpecker</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> зеленовато-жёлтый дятел с чёрными поперечными полосами на спине, красный затылок, чёрные пятна на светлом брюхе. Сидит на стволах и на земле.</p>
       <div class="where">Где: деревья и столбы в парке.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Green-barred_woodpecker" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol lucky">
+    <div class="card bird" data-tags="lucky">
+      <figure class="photo"><img src="img/birds/white-barred_piculet.jpg" alt="White-barred piculet" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:PICA-PAU-AN%C3%83O-DE-COLEIRA_%28Picumnus_cirratus_%29.jpg" target="_blank" rel="noopener">Dario Sanches · CC BY-SA 2.0</a></figcaption></figure>
       <div class="names"><h4>Белополосый дятелок</h4><span class="sci">Picumnus cirratus</span></div>
       <div class="en">White-barred Piculet</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">если повезёт</span></div>
+      <div><span class="chip">если повезёт</span></div>
       <p><b>Признаки:</b> крошечный (10 см) дятел, снизу весь в тонких чёрно-белых полосках, у самца красные точки на лбу. Ползает по тонким веточкам как синица, тихий «ци-ци».</p>
       <div class="where">Где: кустарник и тонкие ветки на опушках.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/White-barred_piculet" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol likely">
+    <div class="card bird" data-tags="likely">
+      <figure class="photo"><img src="img/birds/chalk-browed_mockingbird.jpg" alt="Chalk-browed mockingbird" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Chalk-browed_mockingbird_%28Mimus_saturninus%29_Vicente_Lopez.jpg" target="_blank" rel="noopener">Charles J. Sharp · CC BY-SA 4.0</a></figcaption></figure>
       <div class="names"><h4>Белобровый пересмешник</h4><span class="sci">Mimus saturninus</span></div>
       <div class="en">Chalk-browed Mockingbird</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> серо-бурый, с широкой белой бровью и длинным хвостом с белыми уголками. Сидит на верхушках кустов и столбах, громко и разнообразно поёт. Колумбийский тропический пересмешник заметно светлее и без такой брови.</p>
       <div class="where">Где: открытые участки, кусты у парковки.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Chalk-browed_mockingbird" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol likely">
+    <div class="card bird" data-tags="likely">
+      <figure class="photo"><img src="img/birds/rufous-bellied_thrush.jpg" alt="Rufous-bellied thrush" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Turdus-rufiventris.jpg" target="_blank" rel="noopener">Flávio Cruvinel Brandão · CC BY-SA 2.0 br</a></figcaption></figure>
       <div class="names"><h4>Рыжебрюхий дрозд</h4><span class="sci">Turdus rufiventris</span></div>
       <div class="en">Rufous-bellied Thrush</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> национальная птица Бразилии. Оливково-бурый сверху, рыжее брюхо, жёлтое кольцо вокруг глаза. В сентябре активно поёт: мелодичные флейтовые фразы.</p>
       <div class="where">Где: везде на земле и в кронах, в Bosque Maia особенно много.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Rufous-bellied_thrush" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol likely">
+    <div class="card bird" data-tags="likely">
+      <figure class="photo"><img src="img/birds/picazuro_pigeon.jpg" alt="Picazuro pigeon" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Patagioenas_picazuro_-Buenos_Aires%2C_Argentina-8-4c.jpg" target="_blank" rel="noopener">dfaulde · CC BY 2.0</a></figcaption></figure>
       <div class="names"><h4>Пикасуро</h4><span class="sci">Patagioenas picazuro</span></div>
       <div class="en">Picazuro Pigeon</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> крупный голубь с винно-серой грудью, чешуйчатым рисунком на шее и белой полоской по краю крыла в полёте. Глухое «ху-ху-хууу».</p>
       <div class="where">Где: кроны, провода, газоны.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Picazuro_pigeon" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol likely">
+    <div class="card bird" data-tags="likely">
+      <figure class="photo"><img src="img/birds/masked_water_tyrant.jpg" alt="Masked water tyrant" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Lavadeira_mascarada.jpg" target="_blank" rel="noopener">Daniel Cardoso · Public domain</a></figcaption></figure>
       <div class="names"><h4>Масковый водяной тиран</h4><span class="sci">Fluvicola nengeta</span></div>
       <div class="en">Masked Water-Tyrant</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> белая птичка размером с трясогузку с чёрной «маской» через глаз, чёрными крыльями и хвостом. Ходит по самой кромке воды и по листьям кувшинок. В Колумбии его заменяет пегий водяной тиран (Pied Water-Tyrant) с чёрной спиной.</p>
       <div class="where">Где: берега озёр, отмели.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Masked_water_tyrant" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol likely">
+    <div class="card bird" data-tags="likely">
+      <figure class="photo"><img src="img/birds/chestnut-capped_blackbird.jpg" alt="Chestnut-capped blackbird" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Chrysomus_ruficapillus_-Costanera_Sur_Nature_Reserve%2C_Argentina-8.jpg" target="_blank" rel="noopener">dfaulder · CC BY 2.0</a></figcaption></figure>
       <div class="names"><h4>Каштановошапочный трупиал</h4><span class="sci">Chrysomus ruficapillus</span></div>
       <div class="en">Chestnut-capped Blackbird</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> чёрный, у самца каштановые шапочка и горло (видны на солнце). Стаями в тростнике и на мокрых лугах, скрипучая песня.</p>
       <div class="where">Где: тростник и болотистые края озёр.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Chestnut-capped_blackbird" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol likely">
+    <div class="card bird" data-tags="likely">
+      <figure class="photo"><img src="img/birds/double-collared_seedeater.jpg" alt="Double-collared seedeater" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Double-collared_seedeater_%28Sporophila_caerulescens_caerulescens%29_male_Colonia.jpg" target="_blank" rel="noopener">Charles J. Sharp · CC BY-SA 4.0</a></figcaption></figure>
       <div class="names"><h4>Двуошейниковая овсянка</h4><span class="sci">Sporophila caerulescens</span></div>
       <div class="en">Double-collared Seedeater</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <div><span class="chip">почти наверняка</span></div>
       <p><b>Признаки:</b> крошечная зерноядная птичка. Самец серый сверху, белый снизу, с чёрной маской, белым «усом» и чёрной полосой поперёк груди, клюв жёлтый. В высокой траве у воды.</p>
       <div class="where">Где: травянистые края дорожек, семенящие травы.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Double-collared_seedeater" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol lucky">
+    <div class="card bird" data-tags="lucky">
+      <figure class="photo"><img src="img/birds/maroon-bellied_parakeet.jpg" alt="Maroon-bellied parakeet" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Maroon-bellied_Conure_%28Pyrrhura_frontalis%29_-Sao_Paulo.jpg" target="_blank" rel="noopener">Dario Sanches · CC BY-SA 2.0</a></figcaption></figure>
       <div class="names"><h4>Бурогрудая аратинга</h4><span class="sci">Pyrrhura frontalis</span></div>
       <div class="en">Maroon-bellied Parakeet</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">если повезёт</span></div>
+      <div><span class="chip">если повезёт</span></div>
       <p><b>Признаки:</b> зелёный попугай среднего размера с длинным бордовым хвостом, чешуйчатой серо-жёлтой грудью и бордовым пятном на животе. Стайки, пронзительные крики. Типичный вид Атлантического леса.</p>
       <div class="where">Где: кроны в лесистых частях парка, Bosque Maia.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Maroon-bellied_parakeet" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol lucky">
+    <div class="card bird" data-tags="lucky">
+      <figure class="photo"><img src="img/birds/white-rumped_monjita.jpg" alt="White-rumped monjita" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Noivinha-branca_%28Xolmis_velatus%29_no_Parque_Nacional_da_Serra_da_Canastra.jpg" target="_blank" rel="noopener">Nortondefeis · CC BY-SA 4.0</a></figcaption></figure>
       <div class="names"><h4>Белопоясничная монжита</h4><span class="sci">Xolmis velatus</span></div>
       <div class="en">White-rumped Monjita</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">если повезёт</span></div>
+      <div><span class="chip">если повезёт</span></div>
       <p><b>Признаки:</b> светло-серая, почти белая мухоловка с чёрными крыльями и белым надхвостьем. Сидит открыто на низких столбиках и кустах на лугах, «ныряет» за насекомыми.</p>
       <div class="where">Где: открытые луга у озёр.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/White-rumped_monjita" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol lucky">
+    <div class="card bird" data-tags="lucky">
+      <figure class="photo"><img src="img/birds/dusky-legged_guan.jpg" alt="Dusky-legged guan" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Dusky-legged_guan.jpg" target="_blank" rel="noopener">Andreas Trepte · CC BY-SA 4.0</a></figcaption></figure>
       <div class="names"><h4>Темноногий гуан</h4><span class="sci">Penelope obscura</span></div>
       <div class="en">Dusky-legged Guan</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">если повезёт</span></div>
+      <div><span class="chip">если повезёт</span></div>
       <p><b>Признаки:</b> крупная (70 см) тёмная «лесная индейка» с красным горловым мешком и белыми штрихами на груди. Ходит по земле и по толстым ветвям, шумно взлетает. В Bosque Maia их видят регулярно (по-португальски <i>jacu</i>).</p>
       <div class="where">Где: Bosque Maia, лесные дорожки.</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Dusky-legged_guan" target="_blank" rel="noopener">Wikipedia</a></div>
     </div>
 
-    <div class="card bird" data-tags="nocol endemic lucky">
+    <div class="card bird" data-tags="endemic lucky">
+      <figure class="photo"><img src="img/birds/slaty-breasted_wood_rail.jpg" alt="Slaty-breasted wood rail" loading="lazy"><figcaption><a href="https://commons.wikimedia.org/wiki/File:Aramides_saracura.jpg" target="_blank" rel="noopener">Adrian198cm · Public domain</a></figcaption></figure>
       <div class="names"><h4>Серогрудый лесной пастушок</h4><span class="sci">Aramides saracura</span></div>
       <div class="en">Slaty-breasted Wood-Rail</div>
-      <div><span class="chip hot">нет в Колумбии</span><span class="chip">эндемик Атлантического леса</span><span class="chip">если повезёт</span></div>
+      <div><span class="chip">эндемик Атлантического леса</span><span class="chip">если повезёт</span></div>
       <p><b>Признаки:</b> крупный пастушок с серой грудью, оливковой спиной, рыжим низом, длинными красными ногами и жёлто-зелёным клювом. Ходит по лесной подстилке у ручьёв, дёргая хвостом. Очень громкий дуэт «сара-кура, сара-кура».</p>
       <div class="where">Где: Bosque Maia у ручьёв и влажных участков (местное название <i>saracura</i>).</div>
       <div class="links"><a href="https://en.wikipedia.org/wiki/Slaty-breasted_wood_rail" target="_blank" rel="noopener">Wikipedia</a></div>
@@ -567,13 +596,13 @@
 
 <!-- ===================== CHECKLIST ===================== -->
 <section id="checklist">
-  <h2>Чек-лист до вылета из Дохи</h2>
+  <h2>Чек-лист до вылета из Ларнаки</h2>
   <div class="card">
     <ul class="tight">
       <li>Установить Uber и 99, привязать карту, проверить, что аккаунт работает.</li>
       <li>eSIM с бразильским трафиком или международный роуминг.</li>
       <li>Merlin Bird ID: скачать пакет <b>Brazil: Southeast</b>. eBird: сохранить хотспот <a href="https://ebird.org/hotspot/L1128514" target="_blank" rel="noopener">Parque Ecológico do Tietê</a>.</li>
-      <li>В Дохе: бирка багажа до BOG и посадочные на оба сегмента. Онлайн-регистрация Avianca открывается за 24 часа.</li>
+      <li>В Ларнаке на стойке: бирка багажа до BOG и посадочные на все три сегмента. Онлайн-регистрация Avianca открывается за 24 часа.</li>
       <li>Бинокль, шляпа, вода, крем от солнца, лёгкий дождевик в ручную кладь.</li>
       <li>Сохранить эту страницу офлайн (в браузере «Добавить на главный экран» или PDF).</li>
       <li>Накануне проверить в Google Maps, что Coco Bambu и Pé No Bosque открыты в среду 30 сентября.</li>
@@ -584,7 +613,7 @@
 </main>
 
 <footer><div class="wrap">
-  Источники: eBird (хотспот L1128514, ~300 видов), BirdForum Opus, отчёты бёрдеров о Parque Ecológico do Tietê (2014–2021), сайт парка, GRU Airport, Uber, официальные страницы ресторанов, новости Guarulhos о бёрдвотчинге в Bosque Maia (2026). Статус «нет в Колумбии» дан по ареалам видов; для видов, известных в парке по улетевшим клеточным птицам (кардиналы), это указано в карточке. Данные собраны 27 сентября 2026 года.
+  Источники: eBird (хотспот L1128514, ~300 видов), BirdForum Opus, отчёты бёрдеров о Parque Ecológico do Tietê (2014–2021), сайт парка, GRU Airport, Uber, официальные страницы ресторанов, новости Guarulhos о бёрдвотчинге в Bosque Maia (2026). Для видов, известных в парке по улетевшим клеточным птицам (кардиналы), это указано в карточке. Фото птиц: Wikimedia Commons, авторы и лицензии указаны под каждым фото. Данные собраны 27 сентября 2026 года.
 </div></footer>
 
 <script src="vendor/leaflet/leaflet.js"></script>
