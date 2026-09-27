@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сан-Паулу: 6,5 часов, птицы и обед</title>
+<meta name="description" content="План на пересадку в GRU: куда ехать, каких птиц смотреть, где спокойно поесть.">
+<link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f4ee; --card:#ffffff; --ink:#1d2a22; --muted:#5d6b62; --line:#e2ded3;
+    --accent:#1f7a4d; --accent-2:#c9552b; --soft:#e8f2ec; --warn:#fff4e0; --warn-ink:#8a4b00;
+    --chip:#eef4f0; --chip-ink:#1f5a3a; --shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(20,40,30,.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#121714; --card:#1a211c; --ink:#e9ede9; --muted:#9fada4; --line:#2b352e;
+      --accent:#5fc48f; --accent-2:#f08a5d; --soft:#1f2d25; --warn:#3a2a10; --warn-ink:#ffcf8a;
+      --chip:#22302a; --chip-ink:#a9e2c3; --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#121714; --card:#1a211c; --ink:#e9ede9; --muted:#9fada4; --line:#2b352e;
+    --accent:#5fc48f; --accent-2:#f08a5d; --soft:#1f2d25; --warn:#3a2a10; --warn-ink:#ffcf8a;
+    --chip:#22302a; --chip-ink:#a9e2c3; --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.55;font-size:16px}
+  a{color:var(--accent)}
+  .wrap{max-width:960px;margin:0 auto;padding:0 16px}
+  header.hero{padding:40px 0 20px}
+  header.hero h1{font-size:clamp(28px,5vw,42px);line-height:1.1;margin:0 0 10px;letter-spacing:-.02em}
+  header.hero p.lead{font-size:18px;color:var(--muted);margin:0 0 18px;max-width:640px}
+  .flight{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--shadow);max-width:560px}
+  .flight b{font-size:22px;display:block}
+  .flight small{color:var(--muted)}
+  .flight .mid{text-align:center;color:var(--muted);font-size:13px}
+  nav.toc{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav.toc .wrap{display:flex;gap:6px;overflow-x:auto;padding:10px 16px;scrollbar-width:none}
+  nav.toc a{white-space:nowrap;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);padding:6px 12px;border-radius:999px;font-size:14px;font-weight:500}
+  section{padding:36px 0 8px}
+  h2{font-size:clamp(22px,3.5vw,30px);margin:0 0 6px;letter-spacing:-.01em}
+  .sub{color:var(--muted);margin:0 0 18px}
+  h3{font-size:18px;margin:22px 0 8px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+  .grid{display:grid;gap:14px}
+  .grid.two{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .grid.three{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .note{background:var(--warn);color:var(--warn-ink);border-radius:12px;padding:12px 14px;margin:14px 0}
+  .soft{background:var(--soft);border-radius:12px;padding:12px 14px}
+  .chip{display:inline-block;background:var(--chip);color:var(--chip-ink);border-radius:999px;padding:2px 10px;font-size:12.5px;font-weight:600;margin:0 4px 4px 0}
+  .chip.hot{background:#fde8df;color:#8f3413}
+  :root[data-theme="dark"] .chip.hot{background:#43261a;color:#ffb597}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .chip.hot{background:#43261a;color:#ffb597}}
+  /* timeline */
+  .tl{list-style:none;padding:0;margin:0;border-left:3px solid var(--accent);margin-left:8px}
+  .tl li{position:relative;padding:0 0 18px 22px}
+  .tl li::before{content:"";position:absolute;left:-9px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--accent);border:3px solid var(--bg)}
+  .tl time{font-weight:700;font-variant-numeric:tabular-nums;color:var(--accent)}
+  .tl li.crit time{color:var(--accent-2)}
+  .tl li.crit::before{background:var(--accent-2)}
+  /* birds */
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+  .filters button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 14px;border-radius:999px;cursor:pointer;font:inherit;font-size:14px;font-weight:500}
+  .filters button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .bird{display:flex;flex-direction:column;gap:6px}
+  .bird .names{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+  .bird h4{margin:0;font-size:17px}
+  .bird .sci{font-style:italic;color:var(--muted);font-size:13.5px}
+  .bird .en{color:var(--muted);font-size:14px;margin-top:-4px}
+  .bird p{margin:4px 0 0;font-size:14.5px}
+  .bird .where{font-size:13.5px;color:var(--muted)}
+  .bird .links{font-size:13.5px}
+  .bird[hidden]{display:none}
+  .count{color:var(--muted);font-size:14px;margin-bottom:10px}
+  #map{height:380px;border-radius:14px;border:1px solid var(--line);z-index:1}
+  table{border-collapse:collapse;width:100%;font-size:14.5px}
+  td,th{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:13px}
+  .rest h3{margin-top:0}
+  .stars{color:var(--accent-2);font-weight:700}
+  footer{padding:30px 0 50px;color:var(--muted);font-size:13.5px}
+  ul.tight{margin:6px 0;padding-left:20px}
+  ul.tight li{margin:4px 0}
+  .kbd{background:var(--chip);padding:1px 6px;border-radius:5px;font-size:13px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Сан-Паулу за 6,5 часов:<br>птицы и спокойный обед</h1>
+    <p class="lead">Пересадка в аэропорту Гуарульос (GRU). Выходим в город, смотрим птиц в парке у реки Тьете, обедаем и возвращаемся к рейсу на Боготу.</p>
+    <div class="flight">
+      <div><b>10:35</b><small>DOH → GRU · Qatar · Терминал 3</small></div>
+      <div class="mid">6 ч 40 мин<br>на земле</div>
+      <div style="text-align:right"><b>17:15</b><small>GRU → BOG · Avianca · Терминал 2</small></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc"><div class="wrap">
+  <a href="#plan">План по времени</a>
+  <a href="#logistics">Аэропорт и дорога</a>
+  <a href="#park">Где смотреть птиц</a>
+  <a href="#birds">Птицы</a>
+  <a href="#food">Где поесть</a>
+  <a href="#map-sec">Карта</a>
+  <a href="#planb">План Б</a>
+  <a href="#checklist">Чек-лист</a>
+</div></nav>
+
+<main class="wrap">
+
+<!-- ===================== PLAN ===================== -->
+<section id="plan">
+  <h2>План по времени</h2>
+  <p class="sub">Главная идея: сначала птицы (чем раньше, тем активнее), потом обед рядом с аэропортом. Реально в городе у вас около 3 часов.</p>
+
+  <div class="card">
+    <ul class="tl">
+      <li><time>10:35</time> — посадка в Терминале 3. Паспортный контроль, (если билеты раздельные) получение багажа и таможня. Закладывайте 40–60 минут.</li>
+      <li><time>11:20–11:30</time> — выход в зал прилёта Т3. Заказываем Uber или 99 до <b>Parque Ecológico do Tietê</b> (ехать 15–25 минут, ~9 км).</li>
+      <li><time>11:50–13:45</time> — птицы в парке. Озёра, дорожки вдоль воды, пикниковая зона. Около 2 часов.</li>
+      <li><time>13:45</time> — Uber до района <b>Bosque Maia / Parque Shopping Maia</b> в Гуарульосе (20–25 минут).</li>
+      <li><time>14:10–15:00</time> — обед. Если останется 20 минут, короткая прогулка по Bosque Maia (там свои птицы).</li>
+      <li class="crit"><time>15:00</time> — Uber в аэропорт, <b>Терминал 2</b> (12–20 минут).</li>
+      <li class="crit"><time>15:15</time> — быть в Терминале 2. Это 2 часа до вылета: стойка Avianca, досмотр, паспортный контроль на выезд.</li>
+      <li><time>17:15</time> — вылет в Боготу.</li>
+    </ul>
+  </div>
+
+  <div class="note">
+    <b>Жёсткий дедлайн: 15:15 в Терминале 2.</b> Международные стойки Avianca закрываются примерно за час до вылета, а очереди на досмотр и паспортный контроль в GRU бывают длинными. Если в 14:45 вы ещё не в ресторане, ешьте в аэропорту (см. <a href="#planb">План Б</a>).
+  </div>
+</section>
+
+<!-- ===================== LOGISTICS ===================== -->
+<section id="logistics">
+  <h2>Аэропорт и дорога</h2>
+  <p class="sub">Что нужно знать до того, как выйти из зоны прилёта.</p>
+
+  <div class="grid two">
+    <div class="card">
+      <h3>Въезд в Бразилию</h3>
+      <ul class="tight">
+        <li>Гражданам России виза не нужна (до 90 дней). Если у вас другое гражданство, проверьте заранее: с 2025 года гражданам США, Канады и Австралии нужна электронная виза.</li>
+        <li>На паспортном контроле могут спросить про обратный билет: покажите бронь GRU → BOG.</li>
+        <li>Прилёт Qatar в <b>Терминал 3</b>, вылет Avianca из <b>Терминала 2</b>. Терминалы соседние, между ними 5–7 минут пешком по крытому переходу или бесплатный шаттл.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Багаж</h3>
+      <ul class="tight">
+        <li><b>Один билет</b> (Qatar + Avianca в одной брони): багаж обычно летит до Боготы, вы выходите налегке. Уточните при регистрации в Дохе, куда оформлен багаж.</li>
+        <li><b>Раздельные билеты</b>: получаете багаж в Т3, сдаёте заново на стойке Avianca в Т2 (стойки открываются примерно за 3 часа до вылета). Тогда в город ехать с чемоданами не надо: сначала сдайте их, если стойка уже открыта, либо оставьте в камере хранения в Т2/Т3 (платная, работает круглосуточно).</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Такси и приложения</h3>
+      <ul class="tight">
+        <li>Поставьте <b>Uber</b> и <b>99</b> заранее (99 часто дешевле). Иностранная карта в приложении работает.</li>
+        <li>Точки посадки Uber/99 в GRU: на этаже <b>прилёта</b> в Т3 и на этаже <b>вылета</b> в Т2. Следуйте указателям «Uber / Aplicativos».</li>
+        <li>Ориентир по цене: GRU → парк примерно R$ 35–60, парк → Guarulhos R$ 40–60, Guarulhos → GRU R$ 25–40. Итого около R$ 120–160 на все три поездки.</li>
+        <li>Наличные почти не нужны: везде карта. Английский у водителей редкий, адреса вбивайте сами.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Интернет и связь</h3>
+      <ul class="tight">
+        <li>eSIM (Airalo, Holafly и т. п.) купите заранее: без интернета Uber не вызвать.</li>
+        <li>В аэропорту бесплатный Wi-Fi, его хватит вызвать первую машину.</li>
+        <li>Время в Сан-Паулу: UTC−3, на 2 часа впереди Боготы.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PARK ===================== -->
+<section id="park">
+  <h2>Где смотреть птиц</h2>
+  <p class="sub">Один основной парк близко к аэропорту и один запасной рядом с обедом. В центр Сан-Паулу ехать не стоит: дорога съест всё время.</p>
+
+  <div class="card">
+    <h3 style="margin-top:0">Parque Ecológico do Tietê (núcleo Engenheiro Goulart)</h3>
+    <span class="chip hot">Основной вариант</span> <span class="chip">~300 видов в eBird</span> <span class="chip">бесплатно</span> <span class="chip">9 км от GRU</span>
+    <p>Большой парк в пойме реки Тьете на востоке Сан-Паулу: сеть озёр с островами, заросшие берега, рощи, пикниковые поляны. Это самый продуктивный «городской» хотспот в округе, а от аэропорта до него 15–25 минут. Здесь регулярно встречаются бразильские эндемики, которых нет в Колумбии.</p>
+    <table>
+      <tr><th>Адрес для Uber</th><td>Rua Guirá Acangatara, 70 – Engenheiro Goulart, São Paulo (главный вход с Av. Dr. Assis Ribeiro, 3000)</td></tr>
+      <tr><th>Часы</th><td>Ежедневно, включая праздники. По разным источникам с 6:00 или 8:00 до 17:00; в 12:00 вы точно попадёте.</td></tr>
+      <tr><th>Телефон</th><td>+55 11 2823-2250</td></tr>
+      <tr><th>Ссылки</th><td><a href="https://www.google.com/maps/search/?api=1&query=Parque+Ecol%C3%B3gico+do+Tiet%C3%AA+Rua+Guir%C3%A1+Acangatara+70" target="_blank" rel="noopener">Google Maps</a> · <a href="https://ebird.org/hotspot/L1128514" target="_blank" rel="noopener">eBird hotspot</a> · <a href="https://www.parqueecologicodotiete.com.br/" target="_blank" rel="noopener">сайт парка</a></td></tr>
+    </table>
+
+    <h3>Маршрут на 2 часа</h3>
+    <ol class="tight">
+      <li><b>От входа к ближайшему озеру.</b> На газонах у входа: гуира-кукушки, печники, пересмешники, полевые дятлы (кормятся на земле).</li>
+      <li><b>Дорожка вдоль озёр.</b> Смотрите на воду и кромку: бразильские чирки, свистящие утки, якана, лимпкин, змеешейка, «водяной тиран в маске» ходит прямо по берегу. В тростнике каштаношапочные трупиалы.</li>
+      <li><b>Пикниковая зона у озера (столики, закрытые киоски).</b> Здесь держатся красноголовые кардиналы и часто попадаются носухи. Это самая надёжная точка парка.</li>
+      <li><b>Рощи и эвкалипты.</b> Стайки простых попугайчиков (Plain Parakeet), танагры, дрозды, колибри на цветущих деревьях. Смотрите вверх на сухие ветки: иногда токо-тукан.</li>
+    </ol>
+    <div class="soft">
+      <b>Что взять:</b> бинокль, шляпу, воду, солнцезащитный крем (конец сентября в Сан-Паулу это весна, +22…+27 °C, солнце жёсткое). Скачайте в <b>Merlin Bird ID</b> пакет «Brazil: Southeast» заранее: он определяет по фото и по голосу без интернета.
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h3 style="margin-top:0">Bosque Maia (Guarulhos)</h3>
+    <span class="chip">Запасной / после обеда</span> <span class="chip">бесплатно</span> <span class="chip">6 км от GRU</span>
+    <p>Самый большой городской парк Гуарульоса, прямо напротив ресторанов и в 12–15 минутах от аэропорта. Тенистый лес с дорожками. Местные орнитологи проводят тут утренние экскурсии; регулярно видят <b>гуанов (Dusky-legged Guan)</b>, <b>серогрудых лесных пастушков (Slaty-breasted Wood-Rail)</b>, цапель, танагр, дроздов, сов. Если из-за очередей на паспортном контроле вы сильно опаздываете, езжайте сразу сюда: птицы плюс обед в одном районе.</p>
+    <table>
+      <tr><th>Адрес</th><td>Av. Paulo Faccini, s/n – Jardim Maia, Guarulhos (вход у CEA Virgínia Ranali, Av. Papa João XXIII, 219)</td></tr>
+      <tr><th>Часы</th><td>Ежедневно с раннего утра до вечера; днём точно открыт.</td></tr>
+      <tr><th>Ссылки</th><td><a href="https://www.google.com/maps/search/?api=1&query=Bosque+Maia+Guarulhos" target="_blank" rel="noopener">Google Maps</a></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== BIRDS ===================== -->
+<section id="birds">
+  <h2>Каких птиц искать</h2>
+  <p class="sub">Отобраны виды, которые реально встретить днём в Parque Ecológico do Tietê и Bosque Maia. Отдельно помечены те, которых <b>нет в Колумбии</b>, и эндемики Бразилии / Атлантического леса.</p>
+
+  <div class="filters">
+    <button class="on" data-f="all">Все</button>
+    <button data-f="nocol">Нет в Колумбии</button>
+    <button data-f="endemic">Эндемики</button>
+    <button data-f="likely">Почти наверняка</button>
+    <button data-f="lucky">Если повезёт</button>
+  </div>
+  <div class="count" id="count"></div>
+
+  <div class="grid two" id="birdgrid">
+
+    <div class="card bird" data-tags="nocol endemic likely">
+      <div class="names"><h4>Простой попугайчик</h4><span class="sci">Brotogeris tirica</span></div>
+      <div class="en">Plain Parakeet</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">эндемик Бразилии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> маленький целиком зелёный попугайчик с заострённым хвостом, синеватым отливом на крыльях и бледным клювом. Летает шумными стайками, резкие трескучие крики.</p>
+      <div class="where">Где: кроны деревьев и эвкалипты в парке, часто в полёте над озёрами.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Plain_parakeet" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol endemic likely">
+      <div class="names"><h4>Полосатокрылый печник</h4><span class="sci">Furnarius figulus</span></div>
+      <div class="en">Wing-banded Hornero</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">эндемик Бразилии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> похож на рыжего печника, но мельче и темнее, с рыжей шапочкой и заметной белёсой полосой на крыле в полёте. Ходит по илистым берегам озёр, качая хвостом.</p>
+      <div class="where">Где: кромка воды, мокрые газоны у озёр.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Wing-banded_hornero" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol likely">
+      <div class="names"><h4>Рыжий печник</h4><span class="sci">Furnarius rufus</span></div>
+      <div class="en">Rufous Hornero</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> размером с дрозда, целиком рыжевато-коричневый, хвост ярче спины, светлое горло. Ходит по газонам как «маленькая курица». Строит из глины гнёзда-печки на столбах и ветках, их видно повсюду.</p>
+      <div class="where">Где: любые газоны, обочины, парковка у входа.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Rufous_hornero" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol likely">
+      <div class="names"><h4>Красноголовый кардинал</h4><span class="sci">Paroaria coronata</span></div>
+      <div class="en">Red-crested Cardinal</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> ярко-красная голова с хохлом и красное горло, серая спина, белое брюхо. Ни с кем не спутать. Единственное место в Сан-Паулу, где он встречается регулярно (популяция от улетевших клеточных птиц).</p>
+      <div class="where">Где: пикниковая зона у озера, столики, у закрытых киосков.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Red-crested_cardinal" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol endemic lucky">
+      <div class="names"><h4>Краснокапюшонный кардинал</h4><span class="sci">Paroaria dominicana</span></div>
+      <div class="en">Red-cowled Cardinal</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">эндемик Бразилии</span><span class="chip">если повезёт</span></div>
+      <p><b>Признаки:</b> как красноголовый кардинал, но без хохла, красная голова более «гладкая», спина серо-чёрная с белыми пестринами. Родом с северо-востока Бразилии, здесь тоже из бывших клеточных птиц.</p>
+      <div class="where">Где: там же, у пикниковых столов, часто в одной компании с красноголовым.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Red-cowled_cardinal" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol endemic likely">
+      <div class="names"><h4>Бразильская танагра</h4><span class="sci">Ramphocelus bresilius</span></div>
+      <div class="en">Brazilian Tanager</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">эндемик Бразилии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> самец ослепительно алый с чёрными крыльями и хвостом, у основания клюва серебристо-белое пятно. Самка буро-рыжая с красноватым низом. Держится парами в кустах у воды.</p>
+      <div class="where">Где: кусты и заросли по краям озёр, опушки.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Brazilian_tanager" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol likely">
+      <div class="names"><h4>Танагра сайяка</h4><span class="sci">Thraupis sayaca</span></div>
+      <div class="en">Sayaca Tanager</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> размером с воробья с небольшим, вся голубовато-серая, крылья с зеленовато-бирюзовым отливом. Южный «двойник» колумбийской синей танагры, в Колумбии её нет.</p>
+      <div class="where">Где: везде, где есть деревья с плодами; часто вместе с пальмовыми танаграми.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Sayaca_tanager" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol lucky">
+      <div class="names"><h4>Рубиновошапочная танагра</h4><span class="sci">Tachyphonus coronatus</span></div>
+      <div class="en">Ruby-crowned Tanager</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">если повезёт</span></div>
+      <p><b>Признаки:</b> самец бархатно-чёрный с белым пятном под крылом, рубиновая «шапочка» скрыта и видна редко. Самка рыже-коричневая. Тихая, держится в подлеске.</p>
+      <div class="where">Где: тенистые участки леса, Bosque Maia.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Ruby-crowned_tanager" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol lucky">
+      <div class="names"><h4>Токо-тукан</h4><span class="sci">Ramphastos toco</span></div>
+      <div class="en">Toco Toucan</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">если повезёт</span></div>
+      <p><b>Признаки:</b> самый большой тукан: огромный оранжевый клюв с чёрным пятном на конце, чёрное тело, белое горло, голубая кожа вокруг глаза. Летает тяжело, «рывками». В парке отмечается нерегулярно, но бывает.</p>
+      <div class="where">Где: высокие сухие ветки, кроны у озёр; слушайте хриплое «кряканье».</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Toco_toucan" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol likely">
+      <div class="names"><h4>Вилохвостый колибри</h4><span class="sci">Eupetomena macroura</span></div>
+      <div class="en">Swallow-tailed Hummingbird</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> крупный (для колибри) тёмный колибри с синей головой и грудью, зелёным телом и длинным глубоко вырезанным «ласточкиным» хвостом. Агрессивно гоняет всех от цветущих деревьев.</p>
+      <div class="where">Где: цветущие деревья и кусты по всему парку, в Bosque Maia тоже.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Swallow-tailed_hummingbird" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol likely">
+      <div class="names"><h4>Блестящебрюхий изумруд</h4><span class="sci">Chlorostilbon lucidus</span></div>
+      <div class="en">Glittering-bellied Emerald</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> мелкий колибри, самец весь сверкающе-зелёный с синеватым горлом, хвост синевато-чёрный, клюв красный с чёрным кончиком. Самка серая снизу с белой полоской за глазом.</p>
+      <div class="where">Где: низкие цветущие кусты, живые изгороди.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Glittering-bellied_emerald" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol lucky">
+      <div class="names"><h4>Золотистый сапфир</h4><span class="sci">Hylocharis chrysura</span></div>
+      <div class="en">Gilded Sapphire</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">если повезёт</span></div>
+      <p><b>Признаки:</b> колибри золотисто-зелёного цвета с бронзовым отливом, рыжеватое горло, коралловый клюв с чёрным кончиком. Спокойнее вилохвостого, сидит на открытых веточках.</p>
+      <div class="where">Где: опушки, цветущие деревья у воды.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Gilded_sapphire" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol likely">
+      <div class="names"><h4>Гуира</h4><span class="sci">Guira guira</span></div>
+      <div class="en">Guira Cuckoo</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> взлохмаченная рыжая «причёска», оранжевый клюв, полосатая спина, длинный хвост. Ходят группами по 5–15 птиц по газонам, сидят рядком на заборах. Родственник ани, но выглядит совсем иначе.</p>
+      <div class="where">Где: открытые газоны, парковка, обочины.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Guira_cuckoo" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol likely">
+      <div class="names"><h4>Полевой дятел</h4><span class="sci">Colaptes campestris</span></div>
+      <div class="en">Campo Flicker</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> крупный дятел, кормится на земле муравьями. Золотисто-жёлтая грудь и шея, чёрная шапочка, полосатая спина, чёрное «нагрудник». Громкое «уик-уик-уик».</p>
+      <div class="where">Где: газоны и муравейники на открытых участках.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Campo_flicker" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol likely">
+      <div class="names"><h4>Зеленополосый дятел</h4><span class="sci">Colaptes melanochloros</span></div>
+      <div class="en">Green-barred Woodpecker</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> зеленовато-жёлтый дятел с чёрными поперечными полосами на спине, красный затылок, чёрные пятна на светлом брюхе. Сидит на стволах и на земле.</p>
+      <div class="where">Где: деревья и столбы в парке.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Green-barred_woodpecker" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol lucky">
+      <div class="names"><h4>Белополосый дятелок</h4><span class="sci">Picumnus cirratus</span></div>
+      <div class="en">White-barred Piculet</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">если повезёт</span></div>
+      <p><b>Признаки:</b> крошечный (10 см) дятел, снизу весь в тонких чёрно-белых полосках, у самца красные точки на лбу. Ползает по тонким веточкам как синица, тихий «ци-ци».</p>
+      <div class="where">Где: кустарник и тонкие ветки на опушках.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/White-barred_piculet" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol likely">
+      <div class="names"><h4>Белобровый пересмешник</h4><span class="sci">Mimus saturninus</span></div>
+      <div class="en">Chalk-browed Mockingbird</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> серо-бурый, с широкой белой бровью и длинным хвостом с белыми уголками. Сидит на верхушках кустов и столбах, громко и разнообразно поёт. Колумбийский тропический пересмешник заметно светлее и без такой брови.</p>
+      <div class="where">Где: открытые участки, кусты у парковки.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Chalk-browed_mockingbird" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol likely">
+      <div class="names"><h4>Рыжебрюхий дрозд</h4><span class="sci">Turdus rufiventris</span></div>
+      <div class="en">Rufous-bellied Thrush</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> национальная птица Бразилии. Оливково-бурый сверху, рыжее брюхо, жёлтое кольцо вокруг глаза. В сентябре активно поёт: мелодичные флейтовые фразы.</p>
+      <div class="where">Где: везде на земле и в кронах, в Bosque Maia особенно много.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Rufous-bellied_thrush" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol likely">
+      <div class="names"><h4>Пикасуро</h4><span class="sci">Patagioenas picazuro</span></div>
+      <div class="en">Picazuro Pigeon</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> крупный голубь с винно-серой грудью, чешуйчатым рисунком на шее и белой полоской по краю крыла в полёте. Глухое «ху-ху-хууу».</p>
+      <div class="where">Где: кроны, провода, газоны.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Picazuro_pigeon" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol likely">
+      <div class="names"><h4>Масковый водяной тиран</h4><span class="sci">Fluvicola nengeta</span></div>
+      <div class="en">Masked Water-Tyrant</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> белая птичка размером с трясогузку с чёрной «маской» через глаз, чёрными крыльями и хвостом. Ходит по самой кромке воды и по листьям кувшинок. В Колумбии его заменяет пегий водяной тиран (Pied Water-Tyrant) с чёрной спиной.</p>
+      <div class="where">Где: берега озёр, отмели.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Masked_water_tyrant" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol likely">
+      <div class="names"><h4>Каштановошапочный трупиал</h4><span class="sci">Chrysomus ruficapillus</span></div>
+      <div class="en">Chestnut-capped Blackbird</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> чёрный, у самца каштановые шапочка и горло (видны на солнце). Стаями в тростнике и на мокрых лугах, скрипучая песня.</p>
+      <div class="where">Где: тростник и болотистые края озёр.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Chestnut-capped_blackbird" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol likely">
+      <div class="names"><h4>Двуошейниковая овсянка</h4><span class="sci">Sporophila caerulescens</span></div>
+      <div class="en">Double-collared Seedeater</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">почти наверняка</span></div>
+      <p><b>Признаки:</b> крошечная зерноядная птичка. Самец серый сверху, белый снизу, с чёрной маской, белым «усом» и чёрной полосой поперёк груди, клюв жёлтый. В высокой траве у воды.</p>
+      <div class="where">Где: травянистые края дорожек, семенящие травы.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Double-collared_seedeater" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol lucky">
+      <div class="names"><h4>Бурогрудая аратинга</h4><span class="sci">Pyrrhura frontalis</span></div>
+      <div class="en">Maroon-bellied Parakeet</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">если повезёт</span></div>
+      <p><b>Признаки:</b> зелёный попугай среднего размера с длинным бордовым хвостом, чешуйчатой серо-жёлтой грудью и бордовым пятном на животе. Стайки, пронзительные крики. Типичный вид Атлантического леса.</p>
+      <div class="where">Где: кроны в лесистых частях парка, Bosque Maia.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Maroon-bellied_parakeet" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol lucky">
+      <div class="names"><h4>Белопоясничная монжита</h4><span class="sci">Xolmis velatus</span></div>
+      <div class="en">White-rumped Monjita</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">если повезёт</span></div>
+      <p><b>Признаки:</b> светло-серая, почти белая мухоловка с чёрными крыльями и белым надхвостьем. Сидит открыто на низких столбиках и кустах на лугах, «ныряет» за насекомыми.</p>
+      <div class="where">Где: открытые луга у озёр.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/White-rumped_monjita" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol lucky">
+      <div class="names"><h4>Темноногий гуан</h4><span class="sci">Penelope obscura</span></div>
+      <div class="en">Dusky-legged Guan</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">если повезёт</span></div>
+      <p><b>Признаки:</b> крупная (70 см) тёмная «лесная индейка» с красным горловым мешком и белыми штрихами на груди. Ходит по земле и по толстым ветвям, шумно взлетает. В Bosque Maia их видят регулярно (по-португальски <i>jacu</i>).</p>
+      <div class="where">Где: Bosque Maia, лесные дорожки.</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Dusky-legged_guan" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="nocol endemic lucky">
+      <div class="names"><h4>Серогрудый лесной пастушок</h4><span class="sci">Aramides saracura</span></div>
+      <div class="en">Slaty-breasted Wood-Rail</div>
+      <div><span class="chip hot">нет в Колумбии</span><span class="chip">эндемик Атлантического леса</span><span class="chip">если повезёт</span></div>
+      <p><b>Признаки:</b> крупный пастушок с серой грудью, оливковой спиной, рыжим низом, длинными красными ногами и жёлто-зелёным клювом. Ходит по лесной подстилке у ручьёв, дёргая хвостом. Очень громкий дуэт «сара-кура, сара-кура».</p>
+      <div class="where">Где: Bosque Maia у ручьёв и влажных участков (местное название <i>saracura</i>).</div>
+      <div class="links"><a href="https://en.wikipedia.org/wiki/Slaty-breasted_wood_rail" target="_blank" rel="noopener">Wikipedia</a></div>
+    </div>
+
+    <div class="card bird" data-tags="likely">
+      <div class="names"><h4>Фон: водоплавающие и болотные</h4><span class="sci"></span></div>
+      <div class="en">Есть и в Колумбии, но здесь их много и близко</div>
+      <div><span class="chip">почти наверняка</span></div>
+      <p>Бразильский чирок, белолицая и краснозобая свистящие утки, лимпкин, якана, улитковый коршун, змеешейка, бразильский баклан, большая белая и снежная цапли, южная пигалица, свистящая цапля. Плюс вилохвостые тиранны (Fork-tailed Flycatcher): в сентябре они как раз прилетают гнездиться и висят над лугами с 30-сантиметровыми хвостами.</p>
+      <div class="where">Где: озёра и луга Parque Ecológico do Tietê.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== FOOD ===================== -->
+<section id="food">
+  <h2>Где поесть</h2>
+  <p class="sub">Спокойная, «диетическая» еда без fine dining, всё открыто в 14:00 и близко к аэропорту. Рейтинги и часы перед выездом сверьте в Google Maps: они меняются.</p>
+
+  <div class="grid three">
+    <div class="card rest">
+      <h3>Coco Bambu Guarulhos</h3>
+      <span class="chip hot">1-й выбор</span><span class="chip">рыба на гриле</span><span class="chip">12:00–23:00 ежедневно</span>
+      <p><span class="stars">★ 4.5–4.7</span> · более 15 000 отзывов</p>
+      <p>Большая сеть с морепродуктами и рыбой, спокойные залы, никакого дресс-кода. Берите <i>peixe grelhado</i> (рыба на гриле) с овощами и рисом, <i>salada</i> или <i>moqueca</i> без излишеств. Порции огромные и рассчитаны на двоих, заказывайте одну на пару.</p>
+      <table>
+        <tr><th>Адрес</th><td>Parque Shopping Maia, Av. Bartholomeu de Carlos, 230 (этаж G1), Guarulhos</td></tr>
+        <tr><th>До GRU</th><td>~7 км, 12–20 мин</td></tr>
+        <tr><th>Ссылки</th><td><a href="https://www.google.com/maps/search/?api=1&query=Coco+Bambu+Guarulhos" target="_blank" rel="noopener">Google Maps</a> · <a href="https://cocobambu.com/unidades/cb-guarulhos" target="_blank" rel="noopener">сайт</a></td></tr>
+      </table>
+    </div>
+
+    <div class="card rest">
+      <h3>Pé No Bosque</h3>
+      <span class="chip">здоровая еда</span><span class="chip">у парка Bosque Maia</span>
+      <p><span class="stars">★ высокий рейтинг</span> · небольшое место</p>
+      <p>Маленькое кафе «здоровой кухни» через дорогу от Bosque Maia: салаты, боулы, гриль, свежие соки. Самый «диетический» вариант из трёх. Работает Пн–Вт 12:00–19:00, Ср–Пт 12:00–21:00, Сб 10:00–16:00, <b>в воскресенье закрыто</b>. Если ваш день — воскресенье, идите в Coco Bambu.</p>
+      <table>
+        <tr><th>Адрес</th><td>Rua Brás Cubas, 418 – Jardim Maia, Guarulhos</td></tr>
+        <tr><th>До GRU</th><td>~6 км, 12–18 мин</td></tr>
+        <tr><th>Ссылки</th><td><a href="https://www.google.com/maps/search/?api=1&query=P%C3%A9+No+Bosque+Rua+Br%C3%A1s+Cubas+418+Guarulhos" target="_blank" rel="noopener">Google Maps</a> · <a href="https://www.instagram.com/penobosque/" target="_blank" rel="noopener">Instagram</a></td></tr>
+      </table>
+    </div>
+
+    <div class="card rest">
+      <h3>Ráscal (Терминал 3, мезонин)</h3>
+      <span class="chip">запасной, в аэропорту</span><span class="chip">буфет салатов</span><span class="chip">11:30–22:00</span>
+      <p><span class="stars">★ 4.3–4.5</span> · известная сеть Сан-Паулу</p>
+      <p>Буфет средиземноморской кухни: большая стойка салатов, овощи на пару, рыба и курица на гриле, паста. Расположен в Терминале 3 до зоны досмотра, то есть доступен по пути из парка в Т2. Идеальный вариант, если времени в обрез: ехать из парка сразу в аэропорт и есть здесь.</p>
+      <table>
+        <tr><th>Адрес</th><td>GRU Airport, Terminal 3, Mezanino (общая зона)</td></tr>
+        <tr><th>До Т2</th><td>5–7 мин пешком</td></tr>
+        <tr><th>Ссылки</th><td><a href="https://www.rascal.com.br/enderecos/" target="_blank" rel="noopener">сайт (адреса)</a></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="soft" style="margin-top:14px">
+    <b>Полезные слова:</b> <i>grelhado</i> — на гриле, <i>sem sal</i> — без соли, <i>sem óleo</i> — без масла, <i>legumes no vapor</i> — овощи на пару, <i>sem pimenta</i> — не остро, <i>a conta, por favor</i> — счёт. В Бразилии в счёт обычно включают 10 % за обслуживание, отдельно чаевые не нужны.
+  </div>
+</section>
+
+<!-- ===================== MAP ===================== -->
+<section id="map-sec">
+  <h2>Карта</h2>
+  <p class="sub">Аэропорт, парк и район обеда. Метки приблизительные, для навигации используйте адреса выше.</p>
+  <div id="map"></div>
+  <p style="font-size:14px;color:var(--muted)">
+    Маршруты в Google Maps:
+    <a href="https://www.google.com/maps/dir/?api=1&origin=GRU+Airport+Terminal+3&destination=Parque+Ecol%C3%B3gico+do+Tiet%C3%AA+Rua+Guir%C3%A1+Acangatara+70" target="_blank" rel="noopener">GRU T3 → парк</a> ·
+    <a href="https://www.google.com/maps/dir/?api=1&origin=Parque+Ecol%C3%B3gico+do+Tiet%C3%AA+Rua+Guir%C3%A1+Acangatara+70&destination=Parque+Shopping+Maia+Guarulhos" target="_blank" rel="noopener">парк → Parque Shopping Maia</a> ·
+    <a href="https://www.google.com/maps/dir/?api=1&origin=Parque+Shopping+Maia+Guarulhos&destination=GRU+Airport+Terminal+2" target="_blank" rel="noopener">Shopping Maia → GRU T2</a>
+  </p>
+</section>
+
+<!-- ===================== PLAN B ===================== -->
+<section id="planb">
+  <h2>План Б</h2>
+  <div class="grid two">
+    <div class="card">
+      <h3 style="margin-top:0">Вышли из аэропорта позже 12:15</h3>
+      <p>Едьте сразу в <b>Bosque Maia</b> (12–15 мин): час-полтора на птиц в лесу, обед через дорогу в Pé No Bosque или в Coco Bambu, и вы в 15 минутах от Т2. Parque Ecológico do Tietê в этом сценарии пропускаем.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Вышли позже 13:00</h3>
+      <p>В город не выезжайте. Терминал 3: обед в Ráscal, потом Т2. Птицы вокруг аэропорта: с этажа вылета видны южные пигалицы, гуиры и рыжие печники на газонах, ани в кустах.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Дождь</h3>
+      <p>Конец сентября в Сан-Паулу: начало дождливого сезона, ливни обычно короткие и во второй половине дня. Возьмите лёгкие дождевики; после ливня птицы активнее. Если льёт с утра, Bosque Maia под кронами комфортнее открытых озёр.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Рейс Qatar опаздывает на час и больше</h3>
+      <p>Смотрите на часы в момент выхода из зоны прилёта и выбирайте сценарий выше. Возврат в Т2 к 15:15 остаётся неизменным.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CHECKLIST ===================== -->
+<section id="checklist">
+  <h2>Чек-лист до вылета из Дохи</h2>
+  <div class="card">
+    <ul class="tight">
+      <li>Установить Uber и 99, привязать карту, проверить, что аккаунт работает.</li>
+      <li>eSIM с бразильским трафиком или международный роуминг.</li>
+      <li>Merlin Bird ID: скачать пакет <b>Brazil: Southeast</b>. eBird: сохранить хотспот <a href="https://ebird.org/hotspot/L1128514" target="_blank" rel="noopener">Parque Ecológico do Tietê</a>.</li>
+      <li>Узнать в Дохе, до какого города оформлен багаж. Если до GRU, решить: камера хранения или ранняя сдача в Т2.</li>
+      <li>Бинокль, шляпа, вода, крем от солнца, лёгкий дождевик в ручную кладь.</li>
+      <li>Сохранить эту страницу офлайн (в браузере «Добавить на главный экран» или PDF).</li>
+      <li>Проверить в Google Maps часы Coco Bambu и Pé No Bosque на ваш день недели.</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  Источники: eBird (хотспот L1128514, ~300 видов), BirdForum Opus, отчёты бёрдеров о Parque Ecológico do Tietê (2014–2021), сайт парка, GRU Airport, Uber, официальные страницы ресторанов, новости Guarulhos о бёрдвотчинге в Bosque Maia (2026). Статус «нет в Колумбии» дан по ареалам видов; для видов, известных в парке по улетевшим клеточным птицам (кардиналы), это указано в карточке. Данные собраны 27 сентября 2026 года.
+</div></footer>
+
+<script src="vendor/leaflet/leaflet.js"></script>
+<script>
+  // filters
+  const btns=[...document.querySelectorAll('.filters button')];
+  const cards=[...document.querySelectorAll('.bird')];
+  const count=document.getElementById('count');
+  function apply(f){
+    let n=0;
+    cards.forEach(c=>{const ok=f==='all'||c.dataset.tags.split(' ').includes(f);c.hidden=!ok;if(ok)n++;});
+    count.textContent=`Показано: ${n} из ${cards.length}`;
+  }
+  btns.forEach(b=>b.addEventListener('click',()=>{btns.forEach(x=>x.classList.remove('on'));b.classList.add('on');apply(b.dataset.f);}));
+  apply('all');
+
+  // map
+  try{
+    const map=L.map('map',{scrollWheelZoom:false}).setView([-23.462,-46.50],12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);
+    const pts=[
+      [-23.4356,-46.4731,'GRU, Терминалы 2 и 3','Прилёт Т3, вылет Т2'],
+      [-23.4885,-46.5160,'Parque Ecológico do Tietê','Rua Guirá Acangatara, 70 · основной парк'],
+      [-23.4520,-46.5360,'Bosque Maia','Запасной парк · рядом Pé No Bosque'],
+      [-23.4470,-46.5400,'Parque Shopping Maia','Coco Bambu Guarulhos']
+    ];
+    pts.forEach(p=>L.marker([p[0],p[1]]).addTo(map).bindPopup(`<b>${p[2]}</b><br>${p[3]}`));
+    L.polyline(pts.map(p=>[p[0],p[1]]).concat([[pts[0][0],pts[0][1]]]),{color:'#1f7a4d',weight:3,dashArray:'6 6'}).addTo(map);
+  }catch(e){document.getElementById('map').innerHTML='<p style="padding:16px">Карта не загрузилась, используйте ссылки на Google Maps.</p>';}
+</script>
+</body>
+</html>
