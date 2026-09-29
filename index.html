@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Сан-Паулу: 6,5 часов, птицы и обед</title>
 <meta name="description" content="План на пересадку в GRU 30 сентября 2026: куда ехать, каких птиц смотреть, где спокойно поесть.">
+<meta name="build-version" content="dev">
+<meta name="theme-color" content="#1f7a4d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="GRU птицы">
 <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -90,9 +98,29 @@
   ul.tight{margin:6px 0;padding-left:20px}
   ul.tight li{margin:4px 0}
   .kbd{background:var(--chip);padding:1px 6px;border-radius:5px;font-size:13px}
+  /* offline */
+  .strip{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;padding:8px 16px;font-size:14px;font-weight:500}
+  .strip[hidden]{display:none}
+  #offline-bar{background:var(--warn);color:var(--warn-ink)}
+  #new-version{background:var(--accent);color:#fff}
+  #new-version button{border:0;background:#fff;color:var(--accent);font:inherit;font-weight:600;padding:5px 12px;border-radius:999px;cursor:pointer}
+  #new-version button.link{background:transparent;color:#fff;font-weight:500;text-decoration:underline}
+  .btnrow{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  .btnrow button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 16px;border-radius:999px;cursor:pointer;font:inherit;font-size:14.5px;font-weight:500}
+  .btnrow button[hidden]{display:none}
+  .btnrow button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .btnrow button.danger{color:var(--accent-2)}
+  .btnrow button:disabled{opacity:.5;cursor:default}
+  .progress{height:8px;background:var(--chip);border-radius:999px;overflow:hidden;margin:10px 0}
+  .progress div{height:100%;width:0;background:var(--accent);transition:width .3s}
+  #off-diag{white-space:pre-wrap;font-size:12.5px;color:var(--muted);margin:8px 0 0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;word-break:break-word}
+  details summary{cursor:pointer;font-weight:600}
 </style>
 </head>
 <body>
+
+<div id="offline-bar" class="strip" hidden>Офлайн · данные от <span id="offline-date"></span> · <a href="#offline">пакет</a></div>
+<div id="new-version" class="strip" hidden>Есть новая версия страницы <button id="new-version-reload" type="button">Обновить</button></div>
 
 <header class="hero">
   <div class="wrap">
@@ -115,6 +143,7 @@
   <a href="#map-sec">Карта</a>
   <a href="#planb">План Б</a>
   <a href="#checklist">Чек-лист</a>
+  <a href="#offline">Офлайн</a>
 </div></nav>
 
 <main class="wrap">
@@ -847,6 +876,32 @@
   </div>
 </section>
 
+<!-- ===================== OFFLINE ===================== -->
+<section id="offline">
+  <h2>Офлайн</h2>
+  <p class="sub">Сохраните страницу целиком на телефон: текст, фото птиц, карту стартового вида. В парке и в роуминге интернет не понадобится.</p>
+  <div class="card">
+    <p id="off-status" style="margin-top:0">Проверяем…</p>
+    <div class="progress"><div id="off-bar"></div></div>
+    <div class="btnrow">
+      <button id="off-download" class="primary" type="button" hidden>Скачать пакет</button>
+      <button id="off-stop" type="button" hidden>Остановить</button>
+      <button id="off-check" type="button">Проверить</button>
+      <button id="off-delete" class="danger" type="button" hidden>Удалить пакет</button>
+    </div>
+    <ul class="tight">
+      <li><b>iPhone:</b> сначала «Поделиться» → «На экран “Домой”», затем открыть с иконки и нажать «Скачать пакет». У приложения с экрана «Домой» своё хранилище, отдельное от Safari.</li>
+      <li><b>Android:</b> в Chrome «Установить приложение» или просто скачать пакет прямо здесь.</li>
+      <li>Страница открывается из кэша сразу, свежая версия подтягивается в фоне. Обновление пакета качается только по кнопке, с размером, чтобы не тратить роуминг. GitHub Pages кэширует до 10 минут, поэтому новая версия появляется с такой задержкой.</li>
+      <li>Карта офлайн показывает только сохранённый стартовый вид. Для навигации используйте ссылки Google Maps: Uber и карты у водителя работают.</li>
+    </ul>
+    <details open>
+      <summary>Диагностика</summary>
+      <p id="off-diag"></p>
+    </details>
+  </div>
+</section>
+
 </main>
 
 <footer><div class="wrap">
@@ -854,6 +909,7 @@
 </div></footer>
 
 <script src="vendor/leaflet/leaflet.js"></script>
+<script src="offline.js" defer></script>
 <script>
   // filters
   const btns=[...document.querySelectorAll('.filters button')];
@@ -870,7 +926,7 @@
   // map
   try{
     const map=L.map('map',{scrollWheelZoom:false}).setView([-23.462,-46.50],12);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap'}).addTo(map);
     const pts=[
       [-23.4356,-46.4731,'GRU, Терминалы 2 и 3','Прилёт Т3, вылет Т2'],
       [-23.4885,-46.5160,'Parque Ecológico do Tietê','Rua Guirá Acangatara, 70 · основной парк'],

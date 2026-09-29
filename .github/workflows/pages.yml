@@ -22,9 +22,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build offline package (dist/, manifest, sw.js, version.json)
+        run: node scripts/build-offline.mjs
+      - name: Offline smoke test
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+          node tests/offline.spec.mjs
+      - name: Rebuild dist after the test touched it
+        run: node scripts/build-offline.mjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: dist
       - id: deployment
         uses: actions/deploy-pages@v4
