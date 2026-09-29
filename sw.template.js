@@ -14,7 +14,7 @@ const stub = () => new Response(
   '<!doctype html><meta charset="utf-8"><title>Офлайн</title><body style="font-family:system-ui;padding:24px"><h1>Нет сети</h1><p>Страница ещё не сохранена. Откройте её один раз с интернетом, затем на странице в разделе «Офлайн» скачайте пакет.</p>',
   { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8' } });
 
-const keyOf = (url) => { const u = new URL(url); u.search = ''; u.hash = ''; return u.href; };
+const keyOf = (url) => { const u = new URL(url, self.location.href); u.search = ''; u.hash = ''; return u.href; };
 const isNav = (req) => req.mode === 'navigate' || (req.destination === 'document');
 
 self.addEventListener('install', (event) => {
