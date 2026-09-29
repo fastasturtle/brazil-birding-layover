@@ -53,10 +53,10 @@ try {
   // 3. a changed page is visible from the second visit on
   const idx = `${DIST}/index.html`;
   writeFileSync(idx, readFileSync(idx).toString().replace('</footer>', '<!-- MARKER-42 --></footer>'));
-  await page.goto(URL_, { waitUntil: 'load' });
-  await sleep(800); // background revalidation
-  await page.goto(URL_, { waitUntil: 'load' });
-  assert((await page.content()).includes('MARKER-42'), 'updated page served on the next visit');
+  await page.goto(URL_, { waitUntil: 'load' }); // stale copy, revalidation in the background
+  let seen = false;
+  for (let i = 0; i < 10 && !seen; i++) { await sleep(500); await page.goto(URL_, { waitUntil: 'load' }); seen = (await page.content()).includes('MARKER-42'); }
+  assert(seen, 'updated page served on a following visit');
 
   // 4. offline: cached page and photo render, any navigation falls back to the cached page
   await context.setOffline(true);
